@@ -34,6 +34,7 @@ namespace DesktopNotifications.Windows
 
             SetCurrentProcessExplicitAppUserModelID(aumid);
 
+#if NETSTANDARD
             using var shortcut = new ShellLink
             {
                 TargetPath = mainModule.FileName,
@@ -46,6 +47,7 @@ namespace DesktopNotifications.Windows
             var shortcutFile = Path.Combine(startMenuPath, $"{appName}.lnk");
 
             shortcut.Save(shortcutFile);
+#endif
 
             return new WindowsApplicationContext(appName, aumid);
         }
