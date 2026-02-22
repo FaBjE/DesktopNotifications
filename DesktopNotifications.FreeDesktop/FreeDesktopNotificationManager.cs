@@ -108,6 +108,8 @@ namespace DesktopNotifications.FreeDesktop
                 (int?) duration?.TotalMilliseconds ?? 0
             ).ConfigureAwait(false);
 
+            System.Diagnostics.Debug.WriteLine("Showing notification with ID: " + id);
+
             _activeNotifications[id] = notification;
         }
 
@@ -117,7 +119,11 @@ namespace DesktopNotifications.FreeDesktop
 
             if (_activeNotifications.TryGetKey(notification, out var id))
             {
+                System.Diagnostics.Debug.WriteLine("Requesting close for ID: " + id);
                 await _proxy!.CloseNotificationAsync(id);
+            }
+            else{
+                System.Diagnostics.Debug.WriteLine("No notification key found for: " + notification.Title);
             }
         }
 
